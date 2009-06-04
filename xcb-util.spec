@@ -1,16 +1,12 @@
 %define _pkgconfigdir	%{_libdir}/pkgconfig
 %define _disable_ld_no_undefined 1
-%define major 0
-%define libname %mklibname xcb-util %major
-%define major1 1
-%define libname1 %mklibname xcb-util %major1
 %define develname %mklibname -d xcb-util
 %define staticdevelname %mklibname -s -d xcb-util
 
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
-Version: 0.3.4
-Release: %mkrel 3
+Version: 0.3.5
+Release: %mkrel 1
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
@@ -30,39 +26,41 @@ and interfaces which make the raw X protocol more usable. Some of the
 libraries also provide client-side code which is not strictly part of
 the X protocol but which have traditionally been provided by Xlib.
 
-%package -n %libname
-Summary: A number of libraries which sit on top of libxcb
-Conflicts: libxcb-util-devel < 0.3.4-2mdv
-Group: System/Libraries
+%define aux_major 0
+%define atom_major 1
+%define event_major 1
+%define icccm_major 1
+%define image_major 0
+%define keysyms_major 1
+%define property_major 1
+%define render_util_major 0
+%define reply_major 1
 
-%description -n %libname
-The xcb-util module provides a number of libraries which sit on top of
-libxcb, the core X protocol library, and some of the extension
-libraries. These experimental libraries provide convenience functions
-and interfaces which make the raw X protocol more usable. Some of the
-libraries also provide client-side code which is not strictly part of
-the X protocol but which have traditionally been provided by Xlib.
+%define libaux         %mklibname xcb-aux         %aux_major
+%define libatom        %mklibname xcb-atom        %atom_major
+%define libevent       %mklibname xcb-event       %event_major
+%define libicccm       %mklibname xcb-icccm       %icccm_major
+%define libimage       %mklibname xcb-image       %image_major
+%define libkeysyms     %mklibname xcb-keysyms     %keysyms_major
+%define libproperty    %mklibname xcb-property    %property_major
+%define librender_util %mklibname xcb-render-util %render_util_major
+%define libreply       %mklibname xcb-reply       %reply_major
 
-%package -n %libname1
-Summary: A number of libraries which sit on top of libxcb
-Conflicts: libxcb-util-devel < 0.3.4-2mdv
-Group: System/Libraries
-
-%description -n %libname1
-The xcb-util module provides a number of libraries which sit on top of
-libxcb, the core X protocol library, and some of the extension
-libraries. These experimental libraries provide convenience functions
-and interfaces which make the raw X protocol more usable. Some of the
-libraries also provide client-side code which is not strictly part of
-the X protocol but which have traditionally been provided by Xlib.
+#--------------------------------------------------------------------
 
 %package -n %develname
 Summary: A number of libraries which sit on top of libxcb
 Group: Development/C
 Obsoletes: libxcb-util-devel < 0.3.4-2mdv
 Provides:  libxcb-util-devel = %version-%release
-Requires:  %libname = %version-%release
-Requires:  %libname1 = %version-%release
+Requires:  %libaux = %version-%release
+Requires:  %libatom = %version-%release
+Requires:  %libevent = %version-%release
+Requires:  %libicccm = %version-%release
+Requires:  %libimage = %version-%release
+Requires:  %libproperty = %version-%release
+Requires:  %librender_util = %version-%release
+Requires:  %libreply = %version-%release
 
 %description -n %develname
 The xcb-util module provides a number of libraries which sit on top of
@@ -71,54 +69,6 @@ libraries. These experimental libraries provide convenience functions
 and interfaces which make the raw X protocol more usable. Some of the
 libraries also provide client-side code which is not strictly part of
 the X protocol but which have traditionally been provided by Xlib.
-
-%package -n %staticdevelname
-Summary: A number of libraries which sit on top of libxcb
-Group: Development/C
-Conflicts: libxcb-util-devel < 0.3.4-2mdv
-Provides:  libxcb-util-static-devel = %version-%release
-Requires:  %develname = %version-%release
-
-%description -n %staticdevelname
-The xcb-util module provides a number of libraries which sit on top of
-libxcb, the core X protocol library, and some of the extension
-libraries. These experimental libraries provide convenience functions
-and interfaces which make the raw X protocol more usable. Some of the
-libraries also provide client-side code which is not strictly part of
-the X protocol but which have traditionally been provided by Xlib.
-
-
-
-%prep
-%setup -q
-autoreconf -ifs
-
-%build
-%configure2_5x
-
-%make
-
-%install
-rm -rf %{buildroot}
-%makeinstall_std
-
-%clean
-rm -rf %{buildroot}
-
-%files -n %libname
-%defattr(-,root,root)
-%{_libdir}/libxcb-aux.so.0*
-%{_libdir}/libxcb-image.so.0*
-%{_libdir}/libxcb-render-util.so.0*
-
-%files -n %libname1
-%defattr(-,root,root)
-%{_libdir}/libxcb-atom.so.1*
-%{_libdir}/libxcb-event.so.1*
-%{_libdir}/libxcb-icccm.so.1*
-%{_libdir}/libxcb-keysyms.so.1*
-%{_libdir}/libxcb-property.so.1*
-%{_libdir}/libxcb-reply.so.1*
 
 %files -n %develname
 %defattr(-,root,root)
@@ -161,6 +111,23 @@ rm -rf %{buildroot}
 %{_pkgconfigdir}/xcb-renderutil.pc
 %{_pkgconfigdir}/xcb-reply.pc
 
+#--------------------------------------------------------------------
+
+%package -n %staticdevelname
+Summary: A number of libraries which sit on top of libxcb
+Group: Development/C
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
+Provides:  libxcb-util-static-devel = %version-%release
+Requires:  %develname = %version-%release
+
+%description -n %staticdevelname
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
 %files -n %staticdevelname
 %defattr(-,root,root)
 %{_libdir}/libxcb-atom.a
@@ -172,3 +139,202 @@ rm -rf %{buildroot}
 %{_libdir}/libxcb-property.a
 %{_libdir}/libxcb-render-util.a
 %{_libdir}/libxcb-reply.a
+
+#--------------------------------------------------------------------
+
+%package -n %libaux
+Summary: xcb-util's libxcb-aux
+Group: System/X11
+Conflicts: libxcb-util0 < 0.3.5-1
+Obsoletes: libxcb-util0 < 0.3.5-1
+
+%description -n %libaux
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libaux
+%defattr(-,root,root)
+%{_libdir}/libxcb-aux.so.%{aux_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libatom
+Summary: xcb-util's libxcb-atom
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libatom
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libatom
+%defattr(-,root,root)
+%{_libdir}/libxcb-atom.so.%{atom_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libevent
+Summary: xcb-util's libxcb-event
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libevent
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libevent
+%defattr(-,root,root)
+%{_libdir}/libxcb-event.so.%{event_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libicccm
+Summary: xcb-util's libxcb-icccm
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libicccm
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libicccm
+%defattr(-,root,root)
+%{_libdir}/libxcb-icccm.so.%{icccm_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libimage
+Summary: xcb-util's libxcb-image
+Group: System/X11
+Conflicts: libxcb-util0 < 0.3.5-1
+Obsoletes: libxcb-util0 < 0.3.5-1
+
+%description -n %libimage
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libimage
+%defattr(-,root,root)
+%{_libdir}/libxcb-image.so.%{image_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libkeysyms
+Summary: xcb-util's libxcb-keysyms
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libkeysyms
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libkeysyms
+%defattr(-,root,root)
+%{_libdir}/libxcb-keysyms.so.%{keysyms_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libproperty
+Summary: xcb-util's libxcb-property
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libproperty
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libproperty
+%defattr(-,root,root)
+%{_libdir}/libxcb-property.so.%{property_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %librender_util
+Summary: xcb-util's libxcb-render-util
+Group: System/X11
+Conflicts: libxcb-util0 < 0.3.5-1
+Obsoletes: libxcb-util0 < 0.3.5-1
+
+%description -n %librender_util
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %librender_util
+%defattr(-,root,root)
+%{_libdir}/libxcb-render-util.so.%{render_util_major}*
+
+#--------------------------------------------------------------------
+
+%package -n %libreply
+Summary: xcb-util's libxcb-reply
+Group: System/X11
+Conflicts: libxcb-util1 < 0.3.5-1
+Obsoletes: libxcb-util1 < 0.3.5-1
+
+%description -n %libreply
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %libreply
+%defattr(-,root,root)
+%{_libdir}/libxcb-reply.so.%{reply_major}*
+
+#--------------------------------------------------------------------
+
+%prep
+%setup -q
+autoreconf -ifs
+
+%build
+%configure2_5x
+
+%make
+
+%install
+rm -rf %{buildroot}
+%makeinstall_std
+
+%clean
+rm -rf %{buildroot}
+
