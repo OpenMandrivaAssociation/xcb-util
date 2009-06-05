@@ -6,7 +6,7 @@
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
 Version: 0.3.5
-Release: %mkrel 1
+Release: %mkrel 2
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
@@ -46,6 +46,10 @@ the X protocol but which have traditionally been provided by Xlib.
 %define librender_util %mklibname xcb-render-util %render_util_major
 %define libreply       %mklibname xcb-reply       %reply_major
 
+# Require Obsoletes
+%define libxcb_util0   %mklibname xcb-util        0
+%define libxcb_util1   %mklibname xcb-util        1
+
 #--------------------------------------------------------------------
 
 %package -n %develname
@@ -53,6 +57,7 @@ Summary: A number of libraries which sit on top of libxcb
 Group: Development/C
 Obsoletes: libxcb-util-devel < 0.3.4-2mdv
 Provides:  libxcb-util-devel = %version-%release
+Provides:  xcb-util-devel = %version-%release
 Requires:  %libaux = %version-%release
 Requires:  %libatom = %version-%release
 Requires:  %libevent = %version-%release
@@ -145,8 +150,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libaux
 Summary: xcb-util's libxcb-aux
 Group: System/X11
-Conflicts: libxcb-util0 < 0.3.5-1
-Obsoletes: libxcb-util0 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libaux
 The xcb-util module provides a number of libraries which sit on top of
@@ -165,8 +170,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libatom
 Summary: xcb-util's libxcb-atom
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libatom
 The xcb-util module provides a number of libraries which sit on top of
@@ -185,8 +190,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libevent
 Summary: xcb-util's libxcb-event
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libevent
 The xcb-util module provides a number of libraries which sit on top of
@@ -205,8 +210,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libicccm
 Summary: xcb-util's libxcb-icccm
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libicccm
 The xcb-util module provides a number of libraries which sit on top of
@@ -225,8 +230,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libimage
 Summary: xcb-util's libxcb-image
 Group: System/X11
-Conflicts: libxcb-util0 < 0.3.5-1
-Obsoletes: libxcb-util0 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libimage
 The xcb-util module provides a number of libraries which sit on top of
@@ -245,8 +250,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libkeysyms
 Summary: xcb-util's libxcb-keysyms
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libkeysyms
 The xcb-util module provides a number of libraries which sit on top of
@@ -265,8 +270,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libproperty
 Summary: xcb-util's libxcb-property
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libproperty
 The xcb-util module provides a number of libraries which sit on top of
@@ -285,8 +290,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %librender_util
 Summary: xcb-util's libxcb-render-util
 Group: System/X11
-Conflicts: libxcb-util0 < 0.3.5-1
-Obsoletes: libxcb-util0 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %librender_util
 The xcb-util module provides a number of libraries which sit on top of
@@ -305,8 +310,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libreply
 Summary: xcb-util's libxcb-reply
 Group: System/X11
-Conflicts: libxcb-util1 < 0.3.5-1
-Obsoletes: libxcb-util1 < 0.3.5-1
+Obsoletes: %{libxcb_util0}
+Obsoletes: %{libxcb_util1}
 
 %description -n %libreply
 The xcb-util module provides a number of libraries which sit on top of
