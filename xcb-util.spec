@@ -6,7 +6,7 @@
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
 Version: 0.3.5
-Release: %mkrel 2
+Release: %mkrel 3
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
@@ -63,6 +63,7 @@ Requires:  %libatom = %version-%release
 Requires:  %libevent = %version-%release
 Requires:  %libicccm = %version-%release
 Requires:  %libimage = %version-%release
+Requires:  %libkeysyms = %version-%release
 Requires:  %libproperty = %version-%release
 Requires:  %librender_util = %version-%release
 Requires:  %libreply = %version-%release
