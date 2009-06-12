@@ -6,7 +6,7 @@
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
 Version: 0.3.5
-Release: %mkrel 3
+Release: %mkrel 4
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
@@ -151,6 +151,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libaux
 Summary: xcb-util's libxcb-aux
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -171,6 +172,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libatom
 Summary: xcb-util's libxcb-atom
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -191,6 +193,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libevent
 Summary: xcb-util's libxcb-event
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -211,6 +214,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libicccm
 Summary: xcb-util's libxcb-icccm
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -251,6 +255,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libkeysyms
 Summary: xcb-util's libxcb-keysyms
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -271,6 +276,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libproperty
 Summary: xcb-util's libxcb-property
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -291,6 +297,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %librender_util
 Summary: xcb-util's libxcb-render-util
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
@@ -311,6 +318,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %libreply
 Summary: xcb-util's libxcb-reply
 Group: System/X11
+Conflicts: libxcb-util-devel < 0.3.4-2mdv
 Obsoletes: %{libxcb_util0}
 Obsoletes: %{libxcb_util1}
 
