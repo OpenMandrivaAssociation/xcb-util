@@ -5,8 +5,8 @@
 
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
-Version: 0.3.5
-Release: %mkrel 5
+Version: 0.3.6
+Release: %mkrel 1
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
