@@ -1,21 +1,19 @@
 %define major		0
-%define libname		%mklibname xcb-util %major
+%define libname		%mklibname xcb-util %{major}
 %define develname	%mklibname xcb-util -d
-%define staticdevelname	%mklibname xcb-util -s -d
 
 Name: xcb-util
 Summary: A number of libraries which sit on top of libxcb
 Version: 0.3.8
-Release: %mkrel 1
+Release: 2
 Group: System/X11
 License: MIT
 URL: http://xcb.freedesktop.org
-Source0: http://xcb.freedesktop.org/dist/%name-%{version}.tar.bz2
+Source0: http://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
 BuildRequires: x11-proto-devel
 BuildRequires: x11-util-macros >= 1.1.5
 BuildRequires: xcb-devel
 BuildRequires: gperf
-BuildRoot:  %{_tmppath}/%{name}-buildroot
 
 %description
 The xcb-util module provides a number of libraries which sit on top of
@@ -27,14 +25,14 @@ the X protocol but which have traditionally been provided by Xlib.
 
 #--------------------------------------------------------------------
 
-%package -n %develname
+%package -n %{develname}
 Summary: A number of libraries which sit on top of libxcb
 Group: Development/C
-Provides:  libxcb-util-devel = %version-%release
-Provides:  xcb-util-devel = %version-%release
-Requires:  %libname = %version-%release
+Provides:  xcb-util-devel = %{version}-%{release}
+Requires:  %{libname} = %{version}-%{release}
+Obsoletes: %{_lib}xcb-static-devel
 
-%description -n %develname
+%description -n %{develname}
 The xcb-util module provides a number of libraries which sit on top of
 libxcb, the core X protocol library, and some of the extension
 libraries. These experimental libraries provide convenience functions
@@ -42,8 +40,7 @@ and interfaces which make the raw X protocol more usable. Some of the
 libraries also provide client-side code which is not strictly part of
 the X protocol but which have traditionally been provided by Xlib.
 
-%files -n %develname
-%defattr(-,root,root)
+%files -n %{develname}
 %{_includedir}/xcb/xcb_atom.h
 %{_includedir}/xcb/xcb_aux.h
 %{_includedir}/xcb/xcb_bitops.h
@@ -57,28 +54,7 @@ the X protocol but which have traditionally been provided by Xlib.
 
 #--------------------------------------------------------------------
 
-%package -n %staticdevelname
-Summary: A number of libraries which sit on top of libxcb
-Group: Development/C
-Provides:  libxcb-util-static-devel = %version-%release
-Requires:  %develname = %version-%release
-
-%description -n %staticdevelname
-The xcb-util module provides a number of libraries which sit on top of
-libxcb, the core X protocol library, and some of the extension
-libraries. These experimental libraries provide convenience functions
-and interfaces which make the raw X protocol more usable. Some of the
-libraries also provide client-side code which is not strictly part of
-the X protocol but which have traditionally been provided by Xlib.
-
-%files -n %staticdevelname
-%defattr(-,root,root)
-%{_libdir}/libxcb-util.a
-%{_libdir}/libxcb-util.la
-
-#--------------------------------------------------------------------
-
-%package -n %libname
+%package -n %{libname}
 Summary: xcb-util library package
 Group: System/X11
 Conflicts: %{_lib}xcb-xvmc0 < 1.7-2
@@ -93,7 +69,6 @@ Conflicts: %{_lib}xcb-xv0 < 1.7-2
 Conflicts: %{_lib}xcb-xf86dri0 < 1.7-2
 Conflicts: %{_lib}xcb-damage0 < 1.7-2
 Conflicts: %{_lib}xcb-record0 < 1.7-2
-Conflicts: %{_lib}xcb-static-devel < 1.7-2
 Conflicts: %{_lib}xcb-res0 < 1.7-2
 Conflicts: %{_lib}xcb-screensaver0 < 1.7-2
 Conflicts: %{_lib}xcb-glx0 < 1.7-2
@@ -105,7 +80,7 @@ Conflicts: %{_lib}xcb-render0 < 1.7-2
 Conflicts: %{_lib}xcb-dpms0 < 1.7-2
 Conflicts: %{_lib}xcb-randr0 < 1.7-2
 
-%description -n %libname
+%description -n %{libname}
 The xcb-util module provides a number of libraries which sit on top of
 libxcb, the core X protocol library, and some of the extension
 libraries. These experimental libraries provide convenience functions
@@ -113,8 +88,7 @@ and interfaces which make the raw X protocol more usable. Some of the
 libraries also provide client-side code which is not strictly part of
 the X protocol but which have traditionally been provided by Xlib.
 
-%files -n %libname
-%defattr(-,root,root)
+%files -n %{libname}
 %{_libdir}/libxcb-util.so.%{major}*
 
 #--------------------------------------------------------------------
@@ -123,7 +97,8 @@ the X protocol but which have traditionally been provided by Xlib.
 %setup -q
 
 %build
-%configure2_5x
+%configure2_5x \
+	--disable-static
 
 %make
 
@@ -131,5 +106,3 @@ the X protocol but which have traditionally been provided by Xlib.
 rm -rf %{buildroot}
 %makeinstall_std
 
-%clean
-rm -rf %{buildroot}
