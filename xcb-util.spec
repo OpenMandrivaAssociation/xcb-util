@@ -1,4 +1,4 @@
-%define major		0
+%define major		1
 %define libname		%mklibname xcb-util %{major}
 %define develname	%mklibname xcb-util -d
 
@@ -43,7 +43,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %files -n %{develname}
 %{_includedir}/xcb/xcb_atom.h
 %{_includedir}/xcb/xcb_aux.h
-%{_includedir}/xcb/xcb_bitops.h
+#%{_includedir}/xcb/xcb_bitops.h
 %{_includedir}/xcb/xcb_event.h
 %{_includedir}/xcb/xcb_util.h
 %{_libdir}/libxcb-util.so
