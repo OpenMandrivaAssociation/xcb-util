@@ -57,6 +57,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %package -n %{libname}
 Summary: xcb-util library package
 Group: System/X11
+Provides: libxcb-util
 Conflicts: %{_lib}xcb-xvmc0 < 1.7-2
 Conflicts: %{_lib}xcb-xtest0 < 1.7-2
 Conflicts: %{_lib}xcb-xprint0 < 1.7-2
