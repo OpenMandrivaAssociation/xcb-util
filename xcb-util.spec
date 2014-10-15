@@ -4,8 +4,8 @@
 
 Name:		xcb-util
 Summary:	A number of libraries which sit on top of libxcb
-Version:	0.3.9
-Release:	13
+Version:	0.4.0
+Release:	1
 Group:		System/X11
 License:	MIT
 URL:		http://xcb.freedesktop.org
@@ -91,7 +91,7 @@ the X protocol but which have traditionally been provided by Xlib.
 %setup -q
 
 %build
-%configure2_5x \
+%configure \
 	--disable-static
 
 %make
