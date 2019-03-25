@@ -2,10 +2,12 @@
 %define libname %mklibname xcb-util %{major}
 %define develname %mklibname xcb-util -d
 
+%global optflags %{optflags} -O3
+
 Name:		xcb-util
 Summary:	A number of libraries which sit on top of libxcb
 Version:	0.4.0
-Release:	5
+Release:	6
 Group:		System/X11
 License:	MIT
 URL:		http://xcb.freedesktop.org
@@ -88,14 +90,14 @@ the X protocol but which have traditionally been provided by Xlib.
 %{_libdir}/libxcb-util.so.%{major}*
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 %configure \
 	--disable-static \
 	--with-pic
 
-%make
+%make_build
 
 %install
-%makeinstall_std
+%make_install
