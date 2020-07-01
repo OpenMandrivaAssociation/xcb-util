@@ -1,13 +1,20 @@
+# xcb-util is used by vkd3d, which is used by wine
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define major 1
 %define libname %mklibname xcb-util %{major}
 %define develname %mklibname xcb-util -d
+%define lib32name %mklib32name xcb-util %{major}
+%define devel32name %mklib32name xcb-util -d
 
 %global optflags %{optflags} -O3
 
 Name:		xcb-util
 Summary:	A number of libraries which sit on top of libxcb
 Version:	0.4.0
-Release:	6
+Release:	7
 Group:		System/X11
 License:	MIT
 URL:		http://xcb.freedesktop.org
@@ -16,6 +23,11 @@ BuildRequires:	x11-proto-devel
 BuildRequires:	x11-util-macros >= 1.1.5
 BuildRequires:	xcb-devel
 BuildRequires:	gperf
+%if %{with compat32}
+BuildRequires:	devel(libxcb)
+BuildRequires:	devel(libXau)
+BuildRequires:	devel(libXdmcp)
+%endif
 
 %description
 The xcb-util module provides a number of libraries which sit on top of
@@ -89,15 +101,70 @@ the X protocol but which have traditionally been provided by Xlib.
 %files -n %{libname}
 %{_libdir}/libxcb-util.so.%{major}*
 
+%if %{with compat32}
+%package -n %{devel32name}
+Summary:	A number of libraries which sit on top of libxcb (32-bit)
+Group:		Development/C
+Requires:	%{lib32name} = %{version}-%{release}
+Requires:	%{develname} = %{version}-%{release}
+
+%description -n %{devel32name}
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %{devel32name}
+%{_prefix}/lib/libxcb-util.so
+%{_prefix}/lib/pkgconfig/xcb-atom.pc
+%{_prefix}/lib/pkgconfig/xcb-aux.pc
+%{_prefix}/lib/pkgconfig/xcb-event.pc
+%{_prefix}/lib/pkgconfig/xcb-util.pc
+
+%package -n %{lib32name}
+Summary:	xcb-util library package (32-bit)
+Group:		System/X11
+
+%description -n %{lib32name}
+The xcb-util module provides a number of libraries which sit on top of
+libxcb, the core X protocol library, and some of the extension
+libraries. These experimental libraries provide convenience functions
+and interfaces which make the raw X protocol more usable. Some of the
+libraries also provide client-side code which is not strictly part of
+the X protocol but which have traditionally been provided by Xlib.
+
+%files -n %{lib32name}
+%{_prefix}/lib/libxcb-util.so.%{major}*
+%endif
+
 %prep
 %autosetup -p1
 
-%build
+export CONFIGURE_TOP="$(pwd)"
+
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32 --disable-static --with-pic
+cd ..
+%endif
+
+mkdir build
+cd build
 %configure \
 	--disable-static \
 	--with-pic
 
-%make_build
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
