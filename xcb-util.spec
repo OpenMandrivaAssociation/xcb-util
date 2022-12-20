@@ -13,17 +13,18 @@
 
 Name:		xcb-util
 Summary:	A number of libraries which sit on top of libxcb
-Version:	0.4.0
-Release:	7
+Version:	0.4.1
+Release:	1
 Group:		System/X11
 License:	MIT
 URL:		http://xcb.freedesktop.org
-Source0:	http://xcb.freedesktop.org/dist/%{name}-%{version}.tar.bz2
-BuildRequires:	x11-proto-devel
-BuildRequires:	x11-util-macros >= 1.1.5
-BuildRequires:	xcb-devel
+Source0:	http://xcb.freedesktop.org/dist/%{name}-%{version}.tar.xz
+BuildRequires:	pkgconfig(xproto)
+BuildRequires:	pkgconfig(xorg-macros)
+BuildRequires:	pkgconfig(xcb)
 BuildRequires:	gperf
 %if %{with compat32}
+BuildRequires:	libc6
 BuildRequires:	devel(libxcb)
 BuildRequires:	devel(libXau)
 BuildRequires:	devel(libXdmcp)
@@ -55,7 +56,6 @@ the X protocol but which have traditionally been provided by Xlib.
 %files -n %{develname}
 %{_includedir}/xcb/xcb_atom.h
 %{_includedir}/xcb/xcb_aux.h
-#%{_includedir}/xcb/xcb_bitops.h
 %{_includedir}/xcb/xcb_event.h
 %{_includedir}/xcb/xcb_util.h
 %{_libdir}/libxcb-util.so
