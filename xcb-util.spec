@@ -17,7 +17,7 @@ Version:	0.4.1
 Release:	2
 Group:		System/X11
 License:	MIT
-URL:		http://xcb.freedesktop.org
+URL:		https://xcb.freedesktop.org
 Source0:	http://xcb.freedesktop.org/dist/%{name}-%{version}.tar.xz
 BuildRequires:	pkgconfig(xproto)
 BuildRequires:	pkgconfig(xorg-macros)
